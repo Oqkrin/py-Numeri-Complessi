@@ -1,6 +1,7 @@
 import math
-class NumeroComplesso:
 
+
+class NumeroComplesso:
     formaTrigonometrica = "{modulo} ( cos({angolo}) + i sin({angolo})}"
     formaNormale = "{parteReale} + i({parteImmaginaria})"
 
@@ -19,7 +20,6 @@ class NumeroComplesso:
             self.modulo = self.getModulo()
             self.angolo = self.getAngolo()
 
-
     def getParteReale(self):
         return self.modulo * math.cos(self.angolo)
 
@@ -36,7 +36,7 @@ class NumeroComplesso:
         return self.formaNormale.format(parteReale=self.getParteReale(), parteImmaginaria=self.getParteImmaginaria())
 
     def getFormaTrigonometrica(self):
-        return self.formaTrigonometrica.format(modulo = self.getModulo(), angolo=self.getAngolo())
+        return self.formaTrigonometrica.format(modulo=self.getModulo(), angolo=self.getAngolo())
 
     def getConiugato(self):
         return NumeroComplesso(self.parteReale, -self.parteImmaginaria)
@@ -45,5 +45,17 @@ class NumeroComplesso:
     def getModulo(self):
         return float(math.sqrt(math.pow(self.parteReale, 2) + math.pow(self.parteImmaginaria, 2)))
 
+    def setModulo(self, modulo):
+        self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
+
     def getAngolo(self):
-        return math.atan(self.parteImmaginaria / self.parteReale)
+        return 0 if self.parteReale == 0 else math.atan(self.parteImmaginaria/self.parteReale)
+
+    def setAngolo(self, angolo):
+        self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)
+
+    def getRadianti(self):
+        return math.radians(self.getAngolo())
+
+    def setRadianti(self, radianti):
+        self.__controlloIstanzione(r=self.modulo, ia=radianti, usaCoordinatePolari=True, usaRadianti=True)

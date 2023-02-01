@@ -1,6 +1,6 @@
 import math
+from NumeroComplesso import NumeroComplesso as z
 
-import NumeroComplesso as Z
 
 class OperazioniNumeriComplessi:
     # avendo a + ix e b + iy
@@ -9,20 +9,20 @@ class OperazioniNumeriComplessi:
     def sommaComplessa(ax, by):
         parteReale = ax.getParteReale() + by.getParteReale()
         parteImmaginaria = ax.getParteImmaginaria() + by.getParteImmaginaria()
-        return Z.NumeroComplesso(r=parteReale, ia=parteImmaginaria)
+        return z(r=parteReale, ia=parteImmaginaria)
 
     @staticmethod
-    def diffrenzaComplessa(ax, by):
+    def differenzaComplessa(ax, by):
         parteReale = ax.getParteReale() - by.getParteReale()
         parteImmaginaria = ax.getParteImmaginaria() - by.getParteImmaginaria()
-        return Z.NumeroComplesso(r=parteReale, ia=parteImmaginaria)
+        return z(r=parteReale, ia=parteImmaginaria)
 
     # prodotto = a*b - x*y + i(b*x + a*y)
     @staticmethod
     def prodottoComplesso(ax, by):
         parteReale = ax.getParteReale() * by.getParteReale() - ax.getParteImmaginaria() * by.getParteImmaginaria()
         parteImmaginaria = by.getParteReale() * ax.getParteImmaginaria() + ax.getParteReale() * by.getParteImmaginaria()
-        return Z.NumeroComplesso(parteReale, parteImmaginaria)
+        return z(parteReale, parteImmaginaria)
 
     # quoziente = (a + ix / b + iy) * (coniugato del divisore/coniugato del
     # divisore) cioè (b - ix/b - ix)
@@ -33,8 +33,13 @@ class OperazioniNumeriComplessi:
     @staticmethod
     def quozienteComplesso(ax, by):
         dividendo = OperazioniNumeriComplessi.prodottoComplesso(ax, by.getConiugato())
-        divisore = Z.NumeroComplesso(math.pow(by.getConiugato().getParteImmaginaria(), 2) - math.pow(by.getParteReale(), 2), 0)
-        if divisore.getParteReale() == 0:
+        divisore = OperazioniNumeriComplessi.sommaPerDifferenza(by)
+        if divisore == 0:
             print("\033[1;31;40m Divisore Pari a Zero")
-            divisore = Z.NumeroComplesso(1, 0)
-        return dividendo
+            return z(0, 0)
+        else:
+            return z(dividendo.parteReale/divisore, dividendo.parteImmaginaria/divisore)
+
+    @staticmethod
+    def sommaPerDifferenza(by):
+        return math.pow(by.getConiugato().getParteImmaginaria(), 2) - math.pow(by.getParteReale(), 2)
