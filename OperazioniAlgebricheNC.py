@@ -35,7 +35,7 @@ class OperazioniNumeriComplessi:
         dividendo = OperazioniNumeriComplessi.prodottoComplesso(ax, by.getConiugato())
         divisore = OperazioniNumeriComplessi.sommaPerDifferenza(by)
         if divisore == 0:
-            print("\033[1;31;40m Divisore Pari a Zero")
+            print("Divisione Per Zero")
             return z(0, 0)
         else:
             return z(dividendo.parteReale/divisore, dividendo.parteImmaginaria/divisore)

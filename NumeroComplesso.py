@@ -1,9 +1,13 @@
 import math
 
+from numpy import sign
+
 
 class NumeroComplesso:
-    formaTrigonometrica = "{modulo} ( cos({angolo}) + i sin({angolo})}"
+    formaTrigonometrica = "{modulo} ( cos({angolo}) + i sin({angolo}) )"
     formaNormale = "{parteReale} + i({parteImmaginaria})"
+    segnoParteReale = 1
+    segnoParteImmaginario = 1
 
     def __init__(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         self.__controlloIstanzione(r=r, ia=ia, usaCoordinatePolari=usaCoordinatePolari, usaRadianti=usaRadianti)
@@ -16,18 +20,20 @@ class NumeroComplesso:
             self.parteImmaginaria = self.getParteImmaginaria()
         else:
             self.parteReale = r
+            self.segnoParteReale = sign(ia)
             self.parteImmaginaria = ia
+            self.segnoParteImmaginario = sign(ia)
             self.modulo = self.getModulo()
             self.angolo = self.getAngolo()
 
     def getParteReale(self):
-        return self.modulo * math.cos(self.angolo)
+        return self.modulo * math.cos(self.angolo) * self.segnoParteReale
 
     def setParteReale(self, parteReale):
         self.__controlloIstanzione(r=parteReale, ia=self.parteImmaginaria)
 
     def getParteImmaginaria(self):
-        return self.modulo * math.sin(self.angolo)
+        return self.modulo * math.sin(self.angolo) * self.segnoParteImmaginario
 
     def setParteImmaginaria(self, parteImmaginaria):
         self.__controlloIstanzione(r=self.parteReale, ia=parteImmaginaria)
