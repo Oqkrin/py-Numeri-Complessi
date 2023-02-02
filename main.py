@@ -1,16 +1,25 @@
+from NumeroComplesso import NumeroComplesso
+from OperazioniAlgebricheNC import OperazioniNumeriComplessi as oanc
+
 a = float(input("Digita parte reale del primo valore : "))
 x = float(input("Digita parte immaginaria del primo valore : "))
 b = float(input("Digita parte reale del secondo valore : "))
 y = float(input("Digita parte immaginaria del secondo valore : "))
-numeroComplesso ax = new numeroComplesso(a, x)
-numeroComplesso by = new numeroComplesso(b, y)
 
+ax = NumeroComplesso(a, x)
+by = NumeroComplesso(b, y)
 
-# print("coniugato ax " + OperazioniNumeriComplessi.getConiugato(ax).getNumeroComplesso());
-# print("coniugato by " + OperazioniNumeriComplessi.getConiugato(by).getNumeroComplesso());
-# print("Somma " + OperazioniNumeriComplessi.sommaComplessa(ax, by).getNumeroComplesso());
-# print("differenza ax - by " + OperazioniNumeriComplessi.diffrenzaComplessa(ax, by).getNumeroComplesso());
-# print("differenza by - ax " + OperazioniNumeriComplessi.diffrenzaComplessa(by, ax).getNumeroComplesso());
-# print("prodotto" + OperazioniNumeriComplessi.prodottoComplesso(ax, by).getNumeroComplesso());
-# print("quoziente ax/by " + OperazioniNumeriComplessi.quozienteComplesso(ax, by).getNumeroComplesso());
-# print("quoziente by/ax " + OperazioniNumeriComplessi.quozienteComplesso(by, ax).getNumeroComplesso());
+print("Forma Algebrica ax : " + ax.getFormaTrigonometrica())
+print("Forma Algebrica by : " + by.getFormaTrigonometrica() + "\n")
+print("Forma Trigonometrica ax : " + ax.getNumeroComplesso())
+print("Forma Trigonometrica by : " + by.getNumeroComplesso() + "\n")
+print("coniugato ax : " + ax.getConiugato().getNumeroComplesso())
+print("coniugato by : " + by.getConiugato().getNumeroComplesso() + "\n")
+print("modulo ax : " + str(ax.getModulo()))
+print("modulo by : " + str(by.getModulo()) + "\n")
+print("Somma : " + oanc.sommaComplessa(ax=ax, by=by).getNumeroComplesso() + "\n")
+print("differenza ax - by : " + oanc.differenzaComplessa(ax=ax, by=by).getNumeroComplesso())
+print("differenza by - ax : " + oanc.differenzaComplessa(ax=by, by=ax).getNumeroComplesso() + "\n")
+print("prodotto : " + oanc.prodottoComplesso(ax=ax, by=by).getNumeroComplesso() + "\n")
+print("quoziente ax/by : " + oanc.quozienteComplesso(ax=ax, by=by).getNumeroComplesso())
+print("quoziente by/ax : " + oanc.quozienteComplesso(ax=by, by=ax).getNumeroComplesso())
