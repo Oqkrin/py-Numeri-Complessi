@@ -4,10 +4,10 @@ from numpy import sign
 
 
 class NumeroComplesso:
-    formaTrigonometrica = "{modulo} ( cos({angolo}) + i sin({angolo}) )"
-    formaNormale = "{parteReale} + i({parteImmaginaria})"
-    segnoParteReale = 1
-    segnoParteImmaginario = 1
+    __ft = "{modulo} ( cos({angolo}) + i sin({angolo}) )"
+    __fa = "{parteReale} + i({parteImmaginaria})"
+    __segnoParteReale = 1
+    __segnoParteImmaginario = 1
 
     def __init__(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         self.__controlloIstanzione(r=r, ia=ia, usaCoordinatePolari=usaCoordinatePolari, usaRadianti=usaRadianti)
@@ -20,29 +20,29 @@ class NumeroComplesso:
             self.parteImmaginaria = self.getParteImmaginaria()
         else:
             self.parteReale = r
-            self.segnoParteReale = sign(ia)
+            self.__segnoParteReale = sign(ia)
             self.parteImmaginaria = ia
-            self.segnoParteImmaginario = sign(ia)
+            self.__segnoParteImmaginario = sign(ia)
             self.modulo = self.getModulo()
             self.angolo = self.getAngolo()
 
     def getParteReale(self):
-        return self.modulo * math.cos(self.angolo) * self.segnoParteReale
+        return self.modulo * math.cos(self.angolo) * self.__segnoParteReale
 
     def setParteReale(self, parteReale):
         self.__controlloIstanzione(r=parteReale, ia=self.parteImmaginaria)
 
     def getParteImmaginaria(self):
-        return self.modulo * math.sin(self.angolo) * self.segnoParteImmaginario
+        return self.modulo * math.sin(self.angolo) * self.__segnoParteImmaginario
 
     def setParteImmaginaria(self, parteImmaginaria):
         self.__controlloIstanzione(r=self.parteReale, ia=parteImmaginaria)
 
     def getNumeroComplesso(self):
-        return self.formaNormale.format(parteReale=self.getParteReale(), parteImmaginaria=self.getParteImmaginaria())
+        return self.__fa.format(parteReale=self.getParteReale(), parteImmaginaria=self.getParteImmaginaria())
 
     def getFormaTrigonometrica(self):
-        return self.formaTrigonometrica.format(modulo=self.getModulo(), angolo=self.getAngolo())
+        return self.__ft.format(modulo=self.getModulo(), angolo=self.getAngolo())
 
     def getConiugato(self):
         return NumeroComplesso(self.parteReale, -self.parteImmaginaria)
