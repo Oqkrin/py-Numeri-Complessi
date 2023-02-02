@@ -1,5 +1,5 @@
-import math
 from NumeroComplesso import NumeroComplesso as z
+from OperazioniTrigonometricheNC import prodottoTrigonometrico
 
 
 # avendo a + ix e b + iy
@@ -31,13 +31,8 @@ def prodottoComplesso(ax, by):
 # verificare che il divisore sia diverso da zeri
 def quozienteComplesso(ax, by):
     dividendo = prodottoComplesso(ax, by.getConiugato())
-    divisore = sommaPerDifferenza(by)
+    divisore = prodottoComplesso(by, by.getConiugato()).getParteReale()
     if divisore == 0:
-        print("Divisione Per Zero")
-        return z(0, 0)
+        return prodottoTrigonometrico(ax, by)
     else:
-        return z(dividendo.parteReale / divisore, dividendo.parteImmaginaria / divisore)
-
-
-def sommaPerDifferenza(by):
-    return math.pow(by.getConiugato().getParteImmaginaria(), 2) - math.pow(by.getParteReale(), 2)
+        return z(round(dividendo.parteReale / divisore), round(dividendo.parteImmaginaria / divisore))

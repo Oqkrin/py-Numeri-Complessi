@@ -1,5 +1,4 @@
 import math
-
 from numpy import sign
 
 
@@ -20,7 +19,7 @@ class NumeroComplesso:
             self.parteImmaginaria = self.getParteImmaginaria()
         else:
             self.parteReale = r
-            self.__segnoParteReale = sign(ia)
+            self.__segnoParteReale = sign(r)
             self.parteImmaginaria = ia
             self.__segnoParteImmaginario = sign(ia)
             self.modulo = self.getModulo()
@@ -38,8 +37,18 @@ class NumeroComplesso:
     def setParteImmaginaria(self, parteImmaginaria):
         self.__controlloIstanzione(r=self.parteReale, ia=parteImmaginaria)
 
-    def getNumeroComplesso(self):
-        return self.__fa.format(parteReale=self.getParteReale(), parteImmaginaria=self.getParteImmaginaria())
+    def getFormaAlgebrica(self):
+        prNulla = self.getParteReale() == 0
+        piNulla = self.getParteImmaginaria() == 0
+
+        if prNulla and piNulla:
+            return str(0)
+        elif prNulla:
+            return "i" + str(self.getParteImmaginaria())
+        elif piNulla:
+            return str(self.getParteReale())
+        else:
+            return self.__fa.format(parteReale=self.getParteReale(), parteImmaginaria=self.getParteImmaginaria())
 
     def getFormaTrigonometrica(self):
         return self.__ft.format(modulo=self.getModulo(), angolo=self.getAngolo())
@@ -49,13 +58,13 @@ class NumeroComplesso:
 
     # modulo = pitagora cioè radice quadrata di (a^2 + x^2)
     def getModulo(self):
-        return float(math.sqrt(math.pow(self.parteReale, 2) + math.pow(self.parteImmaginaria, 2)))
+        return round(float(math.sqrt(math.pow(self.parteReale, 2) + math.pow(self.parteImmaginaria, 2))), 3)
 
     def setModulo(self, modulo):
         self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
 
     def getAngolo(self):
-        return 0 if self.parteReale == 0 else math.atan(self.parteImmaginaria/self.parteReale)
+        return 0 if self.parteReale == 0 else math.degrees(math.atan(self.parteImmaginaria / self.parteReale))
 
     def setAngolo(self, angolo):
         self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)

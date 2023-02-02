@@ -17,4 +17,4 @@ def elevamentoTrigonmetrico(ax, e):
         case -1:
             return z(usaCoordinatePolari=True, r=pow(ax.modulo, e), ia=-e * ax.angolo).getConiugato()
         case _:
-            return 1
+            return z(1, 0)

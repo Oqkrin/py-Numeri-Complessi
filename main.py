@@ -2,42 +2,57 @@ from NumeroComplesso import NumeroComplesso
 import OperazioniAlgebricheNC as oanc
 import OperazioniTrigonometricheNC as otnc
 
-a = float(input("Digita parte reale del primo valore : "))
-x = float(input("Digita parte immaginaria del primo valore : "))
-b = float(input("Digita parte reale del secondo valore : "))
-y = float(input("Digita parte immaginaria del secondo valore : "))
-eax = int(input("Digita esponente primo numero : "))
-eby = int(input("Digita esponente secondo numero : "))
+
+def controlloInput(inputText):
+    var = 0
+    while 1:
+        try:
+            var = int(input(inputText))
+            break
+        except ValueError:
+            print("input errato riprovare\n")
+            continue
+    return var
+
+
+a = controlloInput("Digita parte reale del primo valore : ")
+x = controlloInput("Digita parte immaginaria del primo valore : ")
+
+b = controlloInput("Digita parte reale del secondo valore : ")
+y = controlloInput("Digita parte immaginaria del secondo valore : ")
+
+eax = controlloInput("Digita esponente primo numero : ")
+eby = controlloInput("Digita esponente secondo numero : ")
+
 ax = NumeroComplesso(a, x)
 by = NumeroComplesso(b, y)
 
 # TODO: arrotondamento
 
-print("Forma Algebrica ax : " + ax.getNumeroComplesso())
-print("Forma Algebrica by : " + by.getNumeroComplesso() + "\n")
+print("Forma Algebrica ax : " + ax.getFormaAlgebrica())
+print("Forma Algebrica by : " + by.getFormaAlgebrica() + "\n")
 
 print("Forma Trigonometrica ax : " + ax.getFormaTrigonometrica())
 print("Forma Trigonometrica by : " + by.getFormaTrigonometrica() + "\n")
 
-print("coniugato ax : " + ax.getConiugato().getNumeroComplesso())
-print("coniugato by : " + by.getConiugato().getNumeroComplesso() + "\n")
+print("coniugato ax : " + ax.getConiugato().getFormaAlgebrica())
+print("coniugato by : " + by.getConiugato().getFormaAlgebrica() + "\n")
 
 print("modulo ax : " + str(ax.getModulo()))
 print("modulo by : " + str(by.getModulo()) + "\n")
 
-print("Somma : " + oanc.sommaComplessa(ax=ax, by=by).getNumeroComplesso() + "\n")
+print("Somma : " + oanc.sommaComplessa(ax=ax, by=by).getFormaAlgebrica() + "\n")
 
-print("differenza ax - by : " + oanc.differenzaComplessa(ax=ax, by=by).getNumeroComplesso())
-print("differenza by - ax : " + oanc.differenzaComplessa(ax=by, by=ax).getNumeroComplesso() + "\n")
+print("differenza ax - by : " + oanc.differenzaComplessa(ax=ax, by=by).getFormaAlgebrica())
+print("differenza by - ax : " + oanc.differenzaComplessa(ax=by, by=ax).getFormaAlgebrica() + "\n")
 
-print("prodotto : " + oanc.prodottoComplesso(ax=ax, by=by).getNumeroComplesso())
-print("prodotto  : " + otnc.prodottoTrigonometrico(ax=ax, by=by).getFormaTrigonometrica() + "\n")
+print("prodotto : " + oanc.prodottoComplesso(ax=ax, by=by).getFormaAlgebrica())
+print("prodotto formaTrigonometrica : " + otnc.prodottoTrigonometrico(ax=ax, by=by).getFormaTrigonometrica() + "\n")
 
-print("quoziente ax/by : " + oanc.quozienteComplesso(ax=ax, by=by).getNumeroComplesso())
+print("quoziente ax/by : " + oanc.quozienteComplesso(ax=ax, by=by).getFormaAlgebrica())
 print("quoziente trigonometrica ax/by : " + otnc.quozienteTrigonometrico(ax=ax, by=by).getFormaTrigonometrica())
-print("quoziente by/ax : " + oanc.quozienteComplesso(ax=by, by=ax).getNumeroComplesso())
+print("quoziente by/ax : " + oanc.quozienteComplesso(ax=by, by=ax).getFormaAlgebrica())
 print("prodotto trigonometrica by/ax :" + otnc.quozienteTrigonometrico(ax=by, by=ax).getFormaTrigonometrica() + "\n")
 
-print("elevamento ax a " + str(eax) + otnc.elevamentoTrigonmetrico(ax=ax, e=eax).getNumeroComplesso())
-print("elevamento by a " + str(eby) + otnc.elevamentoTrigonmetrico(ax=by, e=eby).getNumeroComplesso())
-
+print("elevamento ax a " + str(eax) + ": " + otnc.elevamentoTrigonmetrico(ax=ax, e=eax).getFormaAlgebrica())
+print("elevamento by a " + str(eby) + ": " + otnc.elevamentoTrigonmetrico(ax=by, e=eby).getFormaAlgebrica())
