@@ -15,7 +15,7 @@ class NumeroComplesso:
     def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
             self.modulo = r
-            self.angolo = ia if usaRadianti else math.degrees(ia)
+            self.angolo = math.degrees(ia) if usaRadianti else ia
             self.parteReale = self.getParteReale()
             self.parteImmaginaria = self.getParteImmaginaria()
         else:

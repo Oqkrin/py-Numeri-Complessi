@@ -30,13 +30,13 @@ print("Somma : " + oanc.sommaComplessa(ax=ax, by=by).getNumeroComplesso() + "\n"
 print("differenza ax - by : " + oanc.differenzaComplessa(ax=ax, by=by).getNumeroComplesso())
 print("differenza by - ax : " + oanc.differenzaComplessa(ax=by, by=ax).getNumeroComplesso() + "\n")
 
-print("prodotto : " + oanc.prodottoComplesso(ax=ax, by=by).getNumeroComplesso() + "\n")
-print("prodotto trigonometrica" + otnc.prodottoTrigonometrico(ax=ax, by=by).getFormaTrigonometrica())
+print("prodotto : " + oanc.prodottoComplesso(ax=ax, by=by).getNumeroComplesso())
+print("prodotto  : " + otnc.prodottoTrigonometrico(ax=ax, by=by).getFormaTrigonometrica() + "\n")
 
 print("quoziente ax/by : " + oanc.quozienteComplesso(ax=ax, by=by).getNumeroComplesso())
 print("quoziente trigonometrica ax/by : " + otnc.quozienteTrigonometrico(ax=ax, by=by).getFormaTrigonometrica())
 print("quoziente by/ax : " + oanc.quozienteComplesso(ax=by, by=ax).getNumeroComplesso())
-print("prodotto trigonometrica by/ax :" + otnc.quozienteTrigonometrico(ax=by, by=ax).getFormaTrigonometrica())
+print("prodotto trigonometrica by/ax :" + otnc.quozienteTrigonometrico(ax=by, by=ax).getFormaTrigonometrica() + "\n")
 
 print("elevamento ax a " + str(eax) + otnc.elevamentoTrigonmetrico(ax=ax, e=eax).getNumeroComplesso())
 print("elevamento by a " + str(eby) + otnc.elevamentoTrigonmetrico(ax=by, e=eby).getNumeroComplesso())
