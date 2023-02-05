@@ -1,6 +1,6 @@
-from NumeroComplesso import NumeroComplesso
 import OperazioniAlgebricheNC as oanc
 import OperazioniTrigonometricheNC as otnc
+from NumeroComplesso import NumeroComplesso
 
 
 def controlloInput(inputText):
@@ -10,7 +10,7 @@ def controlloInput(inputText):
             var = int(input(inputText))
             break
         except ValueError:
-            print("input errato riprovare\n")
+            print("\ninput errato riprovare")
             continue
     return var
 
@@ -27,9 +27,9 @@ eby = controlloInput("Digita esponente secondo numero : ")
 ax = NumeroComplesso(a, x)
 by = NumeroComplesso(b, y)
 
-# TODO: arrotondamento
+# TODO: arrotondamento 50% => usare frazioni
 
-print("Forma Algebrica ax : " + ax.getFormaAlgebrica())
+print("\nForma Algebrica ax : " + ax.getFormaAlgebrica())
 print("Forma Algebrica by : " + by.getFormaAlgebrica() + "\n")
 
 print("Forma Trigonometrica ax : " + ax.getFormaTrigonometrica())
@@ -56,3 +56,4 @@ print("prodotto trigonometrica by/ax :" + otnc.quozienteTrigonometrico(ax=by, by
 
 print("elevamento ax a " + str(eax) + ": " + otnc.elevamentoTrigonmetrico(ax=ax, e=eax).getFormaAlgebrica())
 print("elevamento by a " + str(eby) + ": " + otnc.elevamentoTrigonmetrico(ax=by, e=eby).getFormaAlgebrica())
+

@@ -14,7 +14,7 @@ class NumeroComplesso:
     def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
             self.modulo = r
-            self.angolo = math.degrees(ia) if usaRadianti else ia
+            self.angolo = ia if usaRadianti else math.radians(ia)
             self.parteReale = self.getParteReale()
             self.parteImmaginaria = self.getParteImmaginaria()
         else:
@@ -64,13 +64,13 @@ class NumeroComplesso:
         self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
 
     def getAngolo(self):
-        return 0 if self.parteReale == 0 else math.degrees(math.atan(self.parteImmaginaria / self.parteReale))
+        return 0 if self.parteReale == 0 else math.atan(self.parteImmaginaria / self.parteReale)
 
     def setAngolo(self, angolo):
         self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)
 
-    def getRadianti(self):
-        return math.radians(self.getAngolo())
+    def getGradi(self):
+        return math.degrees(self.getAngolo())
 
     def setRadianti(self, radianti):
         self.__controlloIstanzione(r=self.modulo, ia=radianti, usaCoordinatePolari=True, usaRadianti=True)
