@@ -18,6 +18,7 @@ def operazioni():
     labelRis.config(text="ris: " + risultato)
 
 root = tk.Tk()
+root.iconbitmap("Logo.ico")
 root.title("numeri complessi by Circosta e Ionà")
 root.overrideredirect(False)
 
