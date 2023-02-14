@@ -1,5 +1,4 @@
-from numpy import pi
-from numpy import sign
+import numpy as np
 from NumeroComplesso import NumeroComplesso as z
 import OperazioniAlgebricheNC as oanc
 from decimal import Decimal as dec
@@ -15,7 +14,7 @@ def quozienteTrigonometrico(ax, by):
 
 def elevamentoTrigonmetrico(ax, e):
     if ax.parteReale != 0:
-        match sign(e):
+        match np.sign(e):
             case 1:
                 return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** e, ia=e * ax.angolo)
             case -1:
@@ -48,4 +47,6 @@ def elevamentoTrigonmetrico(ax, e):
 
 
 def radiceTrigonometrica(ax, n):
-    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** (1 / n), ia=dec(str((ax.angolo + 2 * pi))) / dec(str(n)))
+    radici = np.array(ndmin=n)
+    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** (1 / n),
+             ia=dec(str((ax.angolo + 2 * np.pi))) / dec(str(n)))
