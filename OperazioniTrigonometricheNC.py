@@ -2,6 +2,7 @@ from numpy import pi
 from numpy import sign
 from NumeroComplesso import NumeroComplesso as z
 import OperazioniAlgebricheNC as oanc
+from decimal import Decimal as dec
 
 
 def prodottoTrigonometrico(ax, by):
@@ -9,7 +10,7 @@ def prodottoTrigonometrico(ax, by):
 
 
 def quozienteTrigonometrico(ax, by):
-    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo / by.modulo, ia=ax.angolo - by.angolo)
+    return z(usaCoordinatePolari=True, usaRadianti=True, r=dec(str(ax.modulo)) / dec(str(by.modulo)), ia=ax.angolo - by.angolo)
 
 
 def elevamentoTrigonmetrico(ax, e):
@@ -47,4 +48,4 @@ def elevamentoTrigonmetrico(ax, e):
 
 
 def radiceTrigonometrica(ax, n):
-    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** (1 / n), ia=(ax.angolo + 2 * pi) / n)
+    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** (1 / n), ia=dec(str((ax.angolo + 2 * pi))) / dec(str(n)))

@@ -1,5 +1,7 @@
 import math
 from numpy import sign
+from decimal import Decimal as dec
+from main import toINTorDEC
 
 
 class NumeroComplesso:
@@ -13,14 +15,14 @@ class NumeroComplesso:
 
     def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
-            self.modulo = r
-            self.angolo = ia if usaRadianti else math.radians(ia)
+            self.modulo = toINTorDEC(r)
+            self.angolo = toINTorDEC(ia) if usaRadianti else toINTorDEC(math.radians(ia))
             self.parteReale = self.calcParteReale()
             self.parteImmaginaria = self.calcParteImmaginaria()
         else:
-            self.parteReale = r
+            self.parteReale = toINTorDEC(r)
             self.__segnoParteReale = sign(r)
-            self.parteImmaginaria = ia
+            self.parteImmaginaria = toINTorDEC(ia)
             self.__segnoParteImmaginario = sign(ia)
             self.modulo = self.calcModulo()
             self.angolo = self.calcAngolo()
@@ -41,13 +43,13 @@ class NumeroComplesso:
         if self.parteReale == 0 and self.parteImmaginaria == 0:
             return str(0)
         elif self.parteReale == 0:
-            return (self.segn() if self.parteImmaginaria == self.__segnoParteImmaginario else str(self.parteImmaginaria)
-                    ) + "i"
+            return (self.segn() if self.parteImmaginaria == self.__segnoParteImmaginario else
+                    str(self.parteImmaginaria)) + "i"
         elif self.parteImmaginaria == 0:
             return str(self.parteReale)
         else:
             return self.__fa.format(parteReale=self.parteReale,
-                                    parteImmaginaria=abs(self.parteImmaginaria) if self.parteImmaginaria != 1 else "",
+                                    parteImmaginaria=abs(self.parteImmaginaria) if self.parteImmaginaria != 1 else " ",
                                     sgn=self.segn())
 
     def getFormaTrigonometrica(self, usaRadianti=False):
@@ -58,14 +60,14 @@ class NumeroComplesso:
 
     # modulo = pitagora cioè radice quadrata di (a^2 + x^2)
     def calcModulo(self):
-        mod = float(math.sqrt(self.parteReale ** 2 + self.parteImmaginaria ** 2))
-        return int(mod) if mod.is_integer() else round(mod, 3)
+        mod = math.sqrt(self.parteReale ** 2 + self.parteImmaginaria ** 2)
+        return int(mod) if mod.is_integer() else dec(mod)
 
     def setModulo(self, modulo):
         self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
 
     def calcAngolo(self):
-        return 0 if self.parteReale == 0 else math.atan(self.parteImmaginaria / self.parteReale)
+        return 0 if self.parteReale == 0 else math.atan(dec(str(self.parteImmaginaria)) / dec(str(self.parteReale)))
 
     def setAngolo(self, angolo):
         self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)
