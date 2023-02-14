@@ -1,13 +1,12 @@
+import math
+
 import OperazioniAlgebricheNC as oanc
-from NumeroComplesso import NumeroComplesso
+from NumeroComplesso import NumeroComplesso as z
+from decimal import Decimal as dec
 
 
-def main():
-    print(oanc.quozienteComplesso(NumeroComplesso(1, 0), NumeroComplesso(0, 1)).getFormaAlgebrica())
-
-
-if __name__ == "__main__":
-    main()
+def toINTorDEC(value):
+    return int(value) if value.is_integer() else dec(str(value))
 
 
 def controlloInput(inputText):
@@ -19,4 +18,18 @@ def controlloInput(inputText):
         except ValueError:
             print("\ninput errato riprovare")
             continue
-    return int(var) if var.is_integer() else float(var)
+    return toINTorDEC(var)
+
+
+def main():
+    print(
+        oanc.sommaComplessa(
+            z(math.sqrt(2), -1),
+            oanc.prodottoComplesso(z(0, -1), z(1, -math.sqrt(2)))
+        )
+        .getFormaAlgebrica()
+    )
+
+
+if __name__ == "__main__":
+    main()
