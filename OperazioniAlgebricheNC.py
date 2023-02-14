@@ -1,25 +1,26 @@
 from NumeroComplesso import NumeroComplesso as z
 from OperazioniTrigonometricheNC import prodottoTrigonometrico
+from decimal import Decimal as dec
 
 
 # avendo a + ix e b + iy
 # somma = a+b + i(x+y)
 def sommaComplessa(ax, by):
-    parteReale = ax.getParteReale() + by.getParteReale()
-    parteImmaginaria = ax.getParteImmaginaria() + by.getParteImmaginaria()
+    parteReale = ax.parteReale + by.parteReale
+    parteImmaginaria = ax.parteImmaginaria + by.parteImmaginaria
     return z(r=parteReale, ia=parteImmaginaria)
 
 
 def differenzaComplessa(ax, by):
-    parteReale = ax.getParteReale() - by.getParteReale()
-    parteImmaginaria = ax.getParteImmaginaria() - by.getParteImmaginaria()
+    parteReale = ax.parteReale - by.parteReale
+    parteImmaginaria = ax.parteImmaginaria - by.parteImmaginaria
     return z(r=parteReale, ia=parteImmaginaria)
 
 
 # prodotto = a*b - x*y + i(b*x + a*y)
 def prodottoComplesso(ax, by):
-    parteReale = ax.getParteReale() * by.getParteReale() - ax.getParteImmaginaria() * by.getParteImmaginaria()
-    parteImmaginaria = by.getParteReale() * ax.getParteImmaginaria() + ax.getParteReale() * by.getParteImmaginaria()
+    parteReale = ax.parteReale * by.parteReale - ax.parteImmaginaria * by.parteImmaginaria
+    parteImmaginaria = by.parteReale * ax.parteImmaginaria + ax.parteReale * by.parteImmaginaria
     return z(parteReale, parteImmaginaria)
 
 
@@ -31,8 +32,8 @@ def prodottoComplesso(ax, by):
 # verificare che il divisore sia diverso da zeri
 def quozienteComplesso(ax, by):
     dividendo = prodottoComplesso(ax, by.getConiugato())
-    divisore = prodottoComplesso(by, by.getConiugato()).getParteReale()
+    divisore = prodottoComplesso(by, by.getConiugato()).parteReale
     if divisore == 0:
         return prodottoTrigonometrico(ax, by)
     else:
-        return z(round(dividendo.parteReale / divisore), round(dividendo.parteImmaginaria / divisore))
+        return z(dec(str(dividendo.parteReale)) / dec(str(divisore)), dec(str(dividendo.parteImmaginaria)) / dec(str(divisore)))
