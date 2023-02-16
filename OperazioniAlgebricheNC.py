@@ -1,4 +1,4 @@
-from NumeroComplesso import NumeroComplesso as z
+from NumeroComplesso import NumeroComplesso as z, tIoD
 from OperazioniTrigonometricheNC import prodottoTrigonometrico
 from decimal import Decimal as dec
 
@@ -36,4 +36,4 @@ def quozienteComplesso(ax, by):
     if divisore == 0:
         return prodottoTrigonometrico(ax, by)
     else:
-        return z(dec(str(dividendo.parteReale)) / dec(str(divisore)), dec(str(dividendo.parteImmaginaria)) / dec(str(divisore)))
+        return z(tIoD(dividendo.parteReale) / tIoD(divisore), tIoD(dividendo.parteImmaginaria) / tIoD(divisore))

@@ -1,5 +1,6 @@
+import numpy
 import numpy as np
-from NumeroComplesso import NumeroComplesso as z
+from NumeroComplesso import NumeroComplesso as z, tIoD
 import OperazioniAlgebricheNC as oanc
 from decimal import Decimal as dec
 
@@ -9,7 +10,8 @@ def prodottoTrigonometrico(ax, by):
 
 
 def quozienteTrigonometrico(ax, by):
-    return z(usaCoordinatePolari=True, usaRadianti=True, r=dec(str(ax.modulo)) / dec(str(by.modulo)), ia=ax.angolo - by.angolo)
+    return z(usaCoordinatePolari=True, usaRadianti=True, r=tIoD(ax.modulo) / tIoD(by.modulo),
+             ia=ax.angolo - by.angolo)
 
 
 def elevamentoTrigonmetrico(ax, e):
@@ -47,6 +49,10 @@ def elevamentoTrigonmetrico(ax, e):
 
 
 def radiceTrigonometrica(ax, n):
-    radici = np.array(ndmin=n)
-    return z(usaCoordinatePolari=True, usaRadianti=True, r=ax.modulo ** (1 / n),
-             ia=dec(str((ax.angolo + 2 * np.pi))) / dec(str(n)))
+    radici = []
+    for k in range(0, n):
+        radici.append(
+            prodottoTrigonometrico(ax=z(usaCoordinatePolari=True, usaRadianti=True, r=tIoD(ax.modulo) ** (1 / tIoD(n)),
+                                        ia=tIoD(ax.angolo + k * 2 * np.pi) / tIoD(n)),
+                                   by=z(1, 0) if n % 2 == 0 else z(-1, 0)))
+    return radici
