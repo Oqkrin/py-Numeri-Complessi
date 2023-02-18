@@ -2,7 +2,7 @@ from NumeroComplesso import NumeroComplesso as z, tIoD
 from decimal import Decimal as dec
 import OperazioniAlgebricheNC as oanc
 import OperazioniTrigonometricheNC as otnc
-from InterfacciaGrafica import interfaccia
+from InterfacciaGrafica import Interfaccia as gui
 
 
 def controlloInput(inputText):
@@ -18,7 +18,7 @@ def controlloInput(inputText):
 
 
 def main():
-    interfaccia = interfaccia()
+    interfaccia = gui()
 
 
 if __name__ == "__main__":

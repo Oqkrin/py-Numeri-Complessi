@@ -1,3 +1,4 @@
+import decimal
 import math
 from numpy import sign
 from decimal import Decimal as dec
@@ -9,7 +10,7 @@ def tIoD(value):
     :param value:
     :return:
     """
-    return int(value) if float(value).is_integer() else dec(str(value))
+    return value if value.__class__ == decimal.Decimal else (int(value) if float(value).is_integer() else dec(str(value)))
 
 
 class NumeroComplesso:
@@ -24,14 +25,14 @@ class NumeroComplesso:
     def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
             self.modulo = tIoD(r)
-            self.angolo = tIoD(ia) if usaRadianti else tIoD(math.radians(ia))
+            self.angolo = tIoD(ia) if usaRadianti else tIoD(math.radians(tIoD(ia)))
             self.parteReale = tIoD(self.calcParteReale())
             self.parteImmaginaria = tIoD(self.calcParteImmaginaria())
         else:
             self.parteReale = tIoD(r)
-            self.__segnoParteReale = sign(r)
+            self.__segnoParteReale = sign(self.parteReale)
             self.parteImmaginaria = tIoD(ia)
-            self.__segnoParteImmaginario = sign(ia)
+            self.__segnoParteImmaginario = sign(self.parteImmaginaria)
             self.modulo = tIoD(self.calcModulo())
             self.angolo = tIoD(self.calcAngolo())
 

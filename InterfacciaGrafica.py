@@ -3,46 +3,85 @@ from NumeroComplesso import NumeroComplesso as z
 import OperazioniTrigonometricheNC as otnc
 import OperazioniAlgebricheNC as oanc
 
-class interfaccia:
+
+class Interfaccia:
+
     def __init__(self):
+
+        self.contatoreRighe = -1  # -1 perchè vengono incrementate alla prima chiamata della funzione
+        self.contatoreColonne = -1  # -1 perchè vengono incrementate alla prima chiamata della funzione
+        self.contatoreAssoluto = 0
+
         self.root = tk.Tk()
         self.root.title("Circosta and Ionà project")
         self.root.iconbitmap("Logo.ico")
 
-        self.sceltaIniziale()
+        self.pulsanteDiControllo = tk.Button(self.root, text="ᐉ")
+        self.modoInserimentoNC = tk.StringVar(self.root)
+        self.modoInserimentoAngolo = tk.StringVar(self.root)
+
+        self.SceltaModoInserimentoNC()
 
         self.root.mainloop()
 
-    def sceltaIniziale(self):
-        self.option = ["Trigonometrica", "Aritmetica"]
-        variable = tk.StringVar(self.root)
-        variable.set(self.option[0])
+    def controlloModoInserimentoNc(self):
+        match self.modoInserimentoNC.get():
+            case "Trigonometrica":
+                self.inputTrigonometrico()
+            case "Algebrica":
+                self.inputAlgebrico()
 
-        scelta = tk.OptionMenu(self.root, variable, *self.option)
-        scelta.grid(row=0, column=0)
+    def controlloModoInserimentoAngolo(self):
+        match self.modoInserimentoAngolo.get():
+            case "Gradi":
+                self.campoInputNumeroComplesso(usaCoordinatePolari=True, usaRadianti=False)
+            case "Radianti":
+                self.campoInputNumeroComplesso(usaCoordinatePolari=True, usaRadianti=True)
 
-        start = tk.Button(self.root, text="Start", command=lambda: self.operazioni())
-        start.grid(row=0, column=1)
+    def SceltaModoInserimentoNC(self):
 
-    def operazioni(self):
-        if self.option == self.option[0]:
-            print("abc")
-            self.trigonometrica()
-        else:
-            self.algebrica()
+        self.contatoreRighe += 1
+        self.modoInserimentoNC.set("Modalità Input Numero Complesso")
+        sceltaModoInserimentoNC = tk.OptionMenu(self.root, self.modoInserimentoNC,
+                                                *["Trigonometrica", "Algebrica"])
+        sceltaModoInserimentoNC.grid(row=self.contatoreRighe, column=0)
 
-    def trigonometrica(self):
-        label1 = tk.Label(self.root, text="angoli in: ")
-        label1.grid(row=1, column=0)
+        self.pulsanteDiControllo.config(command=lambda: self.controlloModoInserimentoNc())
+        self.pulsanteDiControllo.grid(row=self.contatoreRighe, column=1)
 
-        option = ["Radianti", "Gradi"]
-        variable = tk.StringVar(self.root)
-        variable.set(option[0])
+    def inputTrigonometrico(self):
+        self.contatoreRighe += 1
 
-        scelta = tk.OptionMenu(self.root, variable, *option)
-        scelta.grid(row=1, column=1)
+        self.modoInserimentoAngolo.set("Modalità Input Angolo")
+        sceltaModoInserimentoAngolo = tk.OptionMenu(self.root, self.modoInserimentoAngolo,
+                                                    *["Gradi", "Radianti"])
+        sceltaModoInserimentoAngolo.grid(row=self.contatoreRighe, column=0)
+        self.pulsanteDiControllo.config(command=lambda: self.controlloModoInserimentoAngolo())
+        self.contatoreAssoluto += 1
+        self.pulsanteDiControllo.grid(row=self.contatoreRighe, column=1)
 
-    def algebrica(self):
-        pass
+    def inputAlgebrico(self):
+        self.contatoreRighe += 1
+        self.contatoreAssoluto += 1
+        self.campoInputNumeroComplesso()
 
+    def campoInputNumeroComplesso(self, usaCoordinatePolari=False, usaRadianti=False):
+        self.contatoreAssoluto += 1
+        self.contatoreRighe += 1
+        r = tk.Entry(self.root)
+        ia = tk.Entry(self.root)
+        r.grid(row=self.contatoreRighe, column=0)
+        ia.grid(row=self.contatoreRighe, column=1)
+        self.pulsanteDiControllo.config(
+            command=lambda: self.mostraRis(r=r, ia=ia, usaCoordinatePolari=usaCoordinatePolari,
+                                           usaRadianti=usaRadianti))
+        self.contatoreAssoluto += 1
+        self.pulsanteDiControllo.grid(row=self.contatoreRighe, column=2)
 
+    def mostraRis(self, r, ia, usaCoordinatePolari, usaRadianti):
+        self.contatoreAssoluto += 1
+        nc = z(r=r.get() if r.get() != "" else 0, ia=ia.get() if ia.get() != "" else 0, usaRadianti=usaRadianti,
+               usaCoordinatePolari=usaCoordinatePolari)
+        labelRisultato = tk.Label(text="= "+nc.getFormaTrigonometrica() if usaCoordinatePolari else nc.getFormaAlgebrica())
+        labelRisultato.grid(row=self.contatoreRighe, column=3)
+        self.SceltaModoInserimentoNC()
