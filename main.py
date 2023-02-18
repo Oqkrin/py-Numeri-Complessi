@@ -1,12 +1,8 @@
-import math
-
-import OperazioniAlgebricheNC as oanc
-from NumeroComplesso import NumeroComplesso as z
+from NumeroComplesso import NumeroComplesso as z, tIoD
 from decimal import Decimal as dec
-
-
-def toINTorDEC(value):
-    return int(value) if value.is_integer() else dec(str(value))
+import OperazioniAlgebricheNC as oanc
+import OperazioniTrigonometricheNC as otnc
+from InterfacciaGrafica import Interfaccia as gui
 
 
 def controlloInput(inputText):
@@ -18,17 +14,11 @@ def controlloInput(inputText):
         except ValueError:
             print("\ninput errato riprovare")
             continue
-    return toINTorDEC(var)
+    return tIoD(var)
 
 
 def main():
-    print(
-        oanc.sommaComplessa(
-            z(math.sqrt(2), -1),
-            oanc.prodottoComplesso(z(0, -1), z(1, -math.sqrt(2)))
-        )
-        .getFormaAlgebrica()
-    )
+    interfaccia = gui()
 
 
 if __name__ == "__main__":

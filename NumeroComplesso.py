@@ -1,7 +1,16 @@
+import decimal
 import math
 from numpy import sign
 from decimal import Decimal as dec
-from main import toINTorDEC
+
+
+def tIoD(value):
+    """
+    parse value to int or decimal
+    :param value:
+    :return:
+    """
+    return value if value.__class__ == decimal.Decimal else (int(value) if float(value).is_integer() else dec(str(value)))
 
 
 class NumeroComplesso:
@@ -15,26 +24,26 @@ class NumeroComplesso:
 
     def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
-            self.modulo = toINTorDEC(r)
-            self.angolo = toINTorDEC(ia) if usaRadianti else toINTorDEC(math.radians(ia))
-            self.parteReale = self.calcParteReale()
-            self.parteImmaginaria = self.calcParteImmaginaria()
+            self.modulo = tIoD(r)
+            self.angolo = tIoD(ia) if usaRadianti else tIoD(math.radians(tIoD(ia)))
+            self.parteReale = tIoD(self.calcParteReale())
+            self.parteImmaginaria = tIoD(self.calcParteImmaginaria())
         else:
-            self.parteReale = toINTorDEC(r)
-            self.__segnoParteReale = sign(r)
-            self.parteImmaginaria = toINTorDEC(ia)
-            self.__segnoParteImmaginario = sign(ia)
-            self.modulo = self.calcModulo()
-            self.angolo = self.calcAngolo()
+            self.parteReale = tIoD(r)
+            self.__segnoParteReale = sign(self.parteReale)
+            self.parteImmaginaria = tIoD(ia)
+            self.__segnoParteImmaginario = sign(self.parteImmaginaria)
+            self.modulo = tIoD(self.calcModulo())
+            self.angolo = tIoD(self.calcAngolo())
 
     def calcParteReale(self):
-        return self.modulo * math.cos(self.angolo) * self.__segnoParteReale
+        return self.modulo * tIoD(math.cos(self.angolo)) * self.__segnoParteReale
 
     def setParteReale(self, parteReale):
         self.__controlloIstanzione(r=parteReale, ia=self.parteImmaginaria)
 
     def calcParteImmaginaria(self):
-        return self.modulo * math.sin(self.angolo) * self.__segnoParteImmaginario
+        return self.modulo * tIoD(math.sin(self.angolo)) * self.__segnoParteImmaginario
 
     def setParteImmaginaria(self, parteImmaginaria):
         self.__controlloIstanzione(r=self.parteReale, ia=parteImmaginaria)
@@ -43,13 +52,12 @@ class NumeroComplesso:
         if self.parteReale == 0 and self.parteImmaginaria == 0:
             return str(0)
         elif self.parteReale == 0:
-            return (self.segn() if self.parteImmaginaria == self.__segnoParteImmaginario else
-                    str(self.parteImmaginaria)) + "i"
+            return self.segn() if self.parteImmaginaria == self.__segnoParteImmaginario else str(tIoD(self.parteImmaginaria)) + "i"
         elif self.parteImmaginaria == 0:
-            return str(self.parteReale)
+            return str(tIoD(self.parteReale))
         else:
-            return self.__fa.format(parteReale=self.parteReale,
-                                    parteImmaginaria=abs(self.parteImmaginaria) if self.parteImmaginaria != 1 else " ",
+            return self.__fa.format(parteReale=tIoD(self.parteReale),
+                                    parteImmaginaria=abs(tIoD(self.parteImmaginaria)) if self.parteImmaginaria != 1 else " ",
                                     sgn=self.segn())
 
     def getFormaTrigonometrica(self, usaRadianti=False):
@@ -67,7 +75,7 @@ class NumeroComplesso:
         self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
 
     def calcAngolo(self):
-        return 0 if self.parteReale == 0 else math.atan(dec(str(self.parteImmaginaria)) / dec(str(self.parteReale)))
+        return 0 if self.parteReale == 0 else tIoD(math.atan(tIoD(self.parteImmaginaria)) / tIoD(self.parteReale))
 
     def setAngolo(self, angolo):
         self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)
