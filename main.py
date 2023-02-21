@@ -1,4 +1,4 @@
-from NumeroComplesso import NumeroComplesso as z, tIoD
+from NumeroComplesso import NumeroComplesso as z, IorD
 from decimal import Decimal as dec
 import OperazioniAlgebricheNC as oanc
 import OperazioniTrigonometricheNC as otnc
@@ -14,7 +14,7 @@ def controlloInput(inputText):
         except ValueError:
             print("\ninput errato riprovare")
             continue
-    return tIoD(var)
+    return IorD(var)
 
 
 def main():
