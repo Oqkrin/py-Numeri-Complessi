@@ -1,4 +1,3 @@
-import decimal
 import math
 from numpy import sign, pi
 from decimal import Decimal as dec
@@ -10,7 +9,7 @@ def IorD(i):
     :param i:
     :return: valore convertito in int o decimale
     """
-    return i if i.__class__ == decimal.Decimal else int(i) if float(i).is_integer() else dec(str(i))
+    return i if i.__class__ == dec else int(i) if float(i).is_integer() else dec(str(i))
 
 
 class NumeroComplesso:
