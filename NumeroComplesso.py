@@ -15,7 +15,7 @@ def IorD(i):
 
 class NumeroComplesso:
     __ft = "{modulo} (cos({angolo}) + i sin({angolo}))"
-    __fa = "{parteReale} {sgn}{parteImmaginaria}i"
+    __fa = "{r} {sgn}{i}i"
     __segnoParteReale = 1
     __segnoParteImmaginario = 1
 
@@ -48,7 +48,7 @@ class NumeroComplesso:
     def setParteImmaginaria(self, parteImmaginaria):
         self.__controlloIstanzione(r=self.parteReale, ia=parteImmaginaria)
 
-    def getFormaAlgebrica(self):
+    def getFormAlgebrica(self):
         if self.parteReale == 0 and self.parteImmaginaria == 0:
             return str(0)
         elif self.parteReale == 0:
@@ -57,12 +57,12 @@ class NumeroComplesso:
         elif self.parteImmaginaria == 0:
             return str(IorD(self.parteReale))
         else:
-            return self.__fa.format(parteReale=IorD(self.parteReale),
-                                    parteImmaginaria=abs(IorD(self.parteImmaginaria)) if self.parteImmaginaria != 1 else " ",
+            return self.__fa.format(r=IorD(self.parteReale),
+                                    i=abs(IorD(self.parteImmaginaria)) if self.parteImmaginaria != 1 else " ",
                                     sgn=self.segn())
 
-    def getFormaTrigonometrica(self, usaRadianti=False):
-        return self.__ft.format(modulo=self.modulo, angolo=self.angolo if usaRadianti else self.getGradi())
+    def getFormTrigonometrica(self, usaRadianti=False):
+        return self.__ft.format(modulo=self.modulo, angolo=self.angolo if usaRadianti else (str(self.getGradi()) + '°'))
 
     def getConiugato(self):
         return NumeroComplesso(self.parteReale, -self.parteImmaginaria)
@@ -76,8 +76,8 @@ class NumeroComplesso:
         self.__controlloIstanzione(r=modulo, ia=self.angolo, usaCoordinatePolari=True)
 
     def calcAngolo(self):
-        return IorD(pi)/2 * self.__segnoParteImmaginario if self.parteReale == 0 else IorD(math.atan(
-            IorD(self.parteImmaginaria)) / IorD(self.parteReale))
+        return IorD(pi)/2 * self.__segnoParteImmaginario if self.parteReale == 0 else IorD(
+            math.atan(IorD(self.parteImmaginaria)) / IorD(self.parteReale))
 
     def setAngolo(self, angolo):
         self.__controlloIstanzione(r=self.modulo, ia=angolo, usaCoordinatePolari=True)
@@ -98,8 +98,6 @@ class NumeroComplesso:
                 return "+"
 
     def uguale(self, ax):
-        if (self.parteReale == ax.parteReale and self.parteImmaginaria == ax.parteImmaginaria) or \
-                (self.modulo == ax.modulo and self.angolo == ax.angolo):
-            return True
-        else:
-            return False
+        uguaglianzaAlgebrica = self.parteReale == ax.parteReale and self.parteImmaginaria == ax.parteImmaginaria
+        uguaglianzaTrigonometrica = self.modulo == ax.modulo and self.angolo == ax.angolo
+        return True if uguaglianzaAlgebrica or uguaglianzaTrigonometrica else False

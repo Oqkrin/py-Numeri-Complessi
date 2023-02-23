@@ -1,6 +1,5 @@
 from NumeroComplesso import NumeroComplesso as z, IorD
 from OperazioniTrigonometricheNC import prodottoTrigonometrico
-from decimal import Decimal as dec
 
 
 # avendo a + ix e b + iy
@@ -17,6 +16,7 @@ def differenzaComplessa(ax, by):
     return z(r=parteReale, ia=parteImmaginaria)
 
 
+# avendo a + ix * b + iy il prodotto è uguale a :
 # prodotto = a*b - x*y + i(b*x + a*y)
 def prodottoComplesso(ax, by):
     parteReale = ax.parteReale * by.parteReale - ax.parteImmaginaria * by.parteImmaginaria

@@ -1,4 +1,5 @@
 import tkinter as tk
+import customtkinter as ctk
 from NumeroComplesso import NumeroComplesso as z
 import OperazioniTrigonometricheNC as otnc
 import OperazioniAlgebricheNC as oanc
@@ -82,6 +83,28 @@ class Interfaccia:
         self.contatoreAssoluto += 1
         nc = z(r=r.get() if r.get() != "" else 0, ia=ia.get() if ia.get() != "" else 0, usaRadianti=usaRadianti,
                usaCoordinatePolari=usaCoordinatePolari)
-        labelRisultato = tk.Label(text="= "+nc.getFormaTrigonometrica() if usaCoordinatePolari else nc.getFormaAlgebrica())
-        labelRisultato.grid(row=self.contatoreRighe, column=3)
+        labelRis = tk.Label(text="= " + nc.getFormTrigonometrica() if usaCoordinatePolari else nc.getFormAlgebrica())
+        labelRis.grid(row=self.contatoreRighe, column=3)
         self.SceltaModoInserimentoNC()
+
+
+class ctkInterfaccia(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.toplevel_window = None
+        ctk.set_appearance_mode("System")
+        ctk.set_default_color_theme("green")
+
+        self.stato = False
+        larghezza = 426
+        altezza = 300
+        x = 100
+        y = 100
+
+        self.title("Calcolatrice Numeri complessi by Circosta e Ionà")
+        self.iconbitmap("Logo.ico")
+        self.minsize(larghezza, altezza)
+        self.geometry("{w}x{h}+{x}+{y}".format(w=larghezza, h=altezza, x=x, y=y))
+
+
