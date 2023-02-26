@@ -6,22 +6,28 @@ from decimal import Decimal as dec
 def IorD(i):
     """
     converte valore in decimale o intero per maggiore precisione
+    valore vuoto trasformato in 0
     :param i:
     :return: valore convertito in int o decimale
     """
+    try:
+        float(i)
+    except ValueError:
+        i = 0
+
     return i if i.__class__ == dec else int(i) if float(i).is_integer() else dec(str(i))
 
 
 class NumeroComplesso:
     __ft = "{modulo} (cos({angolo}) + i sin({angolo}))"
-    __fa = "{r} {sgn}{i}i"
+    __fa = "{r} {sgn} {i}i"
     __segnoParteReale = 1
     __segnoParteImmaginario = 1
 
-    def __init__(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
+    def __init__(self, r=0, ia=0, usaCoordinatePolari=False, usaRadianti=False):
         self.__controlloIstanzione(r=r, ia=ia, usaCoordinatePolari=usaCoordinatePolari, usaRadianti=usaRadianti)
 
-    def __controlloIstanzione(self, r, ia, usaCoordinatePolari=False, usaRadianti=False):
+    def __controlloIstanzione(self, r=0, ia=0, usaCoordinatePolari=False, usaRadianti=False):
         if usaCoordinatePolari:
             self.modulo = IorD(r)
             self.angolo = IorD(ia) if usaRadianti else IorD(math.radians(IorD(ia)))
@@ -89,7 +95,7 @@ class NumeroComplesso:
         if self.parteReale == 0 and self.parteImmaginaria == 0:
             return str(0)
         elif self.parteReale == 0:
-            return self.sIgn() if self.parteImmaginaria == self.__segnoParteImmaginario \
+            return self.sIgn() + "i" if self.parteImmaginaria == self.__segnoParteImmaginario \
                 else str(IorD(self.parteImmaginaria)) + "i"
         elif self.parteImmaginaria == 0:
             return str(IorD(self.parteReale))
@@ -104,7 +110,7 @@ class NumeroComplesso:
     def sIgn(self):
         """
         ritorna il segno della parte immaginaria come stringa
-        :return: segno parte immaginario come string
+        :return: String
         """
         match self.__segnoParteImmaginario:
             case 1:
@@ -118,6 +124,11 @@ class NumeroComplesso:
         return NumeroComplesso(self.parteReale, -self.parteImmaginaria)
 
     def uguale(self, ax):
+        """
+        True se i valori sono uguali sennò False
+        :param ax: valore da confrontare
+        :return: boolean
+        """
         uguaglianzaAlgebrica = self.parteReale == ax.parteReale and self.parteImmaginaria == ax.parteImmaginaria
         uguaglianzaTrigonometrica = self.modulo == ax.modulo and self.angolo == ax.angolo
         return True if uguaglianzaAlgebrica or uguaglianzaTrigonometrica else False
